@@ -2,14 +2,14 @@ const connection = require('../database/connection');
 const crypto = require('crypto');
 
 module.exports = {
-    async index(req, res){
+    async index(request, response){
         const ongs = await connection('ongs').select('*');
     
-        return res.json(ongs);
+        return response.json(ongs);
     },
 
-    async store(req, res) {
-        const { name, email, whatsapp, city, uf } = req.body;
+    async store(request, response) {
+        const { name, email, whatsapp, city, uf } = request.body;
 
         // Gera 4 bytes de caracteres aleatórios em hexadecimal
         const id = crypto.randomBytes(4).toString('HEX');
@@ -23,9 +23,9 @@ module.exports = {
             uf
         });
 
-        console.log(`[INSERT]: Ong "${name}" inserida com id ${id}`);
+        console.log(`[INSERT]: A new Ong was created with name "${name}" on id (${id})`);
 
-        return res.json({
+        return response.json({
             id
         });
     }
