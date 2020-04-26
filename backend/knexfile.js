@@ -26,8 +26,19 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   },
-
+  
   production: {
+    client: 'sqlite3',
+    connection: {
+      filename: './src/database/db.sqlite'
+    },
+    migrations: {
+      directory: './src/database/migrations'
+    },
+    useNullAsDefault: true
+  },
+
+  pproduction: {
     client: 'postgresql',
     connection: {
       database: 'my_db',

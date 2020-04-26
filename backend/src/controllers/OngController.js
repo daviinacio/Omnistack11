@@ -28,5 +28,9 @@ module.exports = {
         return response.json({
             id
         });
+    },
+
+    async delete(request, response) {
+        
     }
 };

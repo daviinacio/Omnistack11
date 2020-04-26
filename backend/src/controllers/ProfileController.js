@@ -9,6 +9,9 @@ module.exports = {
             .select('*')
             .first();
 
+        if(!ong)
+            return response.status(400).json({ error: 'No ONG found with this ID' });
+
         const incidents = await connection('incidents')
             .where('ong_id', ong_id)
             .select('*');
