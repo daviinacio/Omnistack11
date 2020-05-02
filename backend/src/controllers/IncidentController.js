@@ -31,21 +31,18 @@ module.exports = {
 
     async store(request, response) {
         const { title, description, value } = request.body;
+
         const ong_id = request.headers.authorization;
 
-        // Block non authorizated org to create incidents
-        if(!ong_id)
-            return response.status(401).json({ error: "Operation not authorized" });
-
-        const org = await connection('ongs')
-            .where('id', ong_id)
+        const ong = await connection('ongs')
+            .where('id', ong_id || '')
             .select('name')
             .first();
 
-        if(!org)
-            return response.status(400).json({ error: 'No ONG found with this ID' });
+        // Block non authorizated ong to create incidents
+        if(!ong || !ong_id)
+            return response.status(401).json({ error: "Operation not authorized" });
         
-
         // Insere um novo incident
         const [id] = await connection('incidents').insert({
             title, description, value, ong_id

@@ -5,16 +5,18 @@ module.exports = {
         const ong_id = request.headers.authorization;
 
         const ong = await connection('ongs')
-            .where('id', ong_id)
+            .where('id', ong_id || '')
             .select('*')
             .first();
 
-        if(!ong)
-            return response.status(400).json({ error: 'No ONG found with this ID' });
+        if(!ong || !ong_id)
+            return response.status(401).json({ error: "Operation not authorized" });
 
         const incidents = await connection('incidents')
             .where('ong_id', ong_id)
-            .select('*');
+            .select([
+                'id', 'title', 'description', 'value'
+            ]);
 
         ong.incidents = incidents;
 

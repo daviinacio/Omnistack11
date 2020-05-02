@@ -4,6 +4,10 @@ const crypto = require('crypto');
 module.exports = {
     async index(request, response){
         const ongs = await connection('ongs').select('*');
+        
+        const [count] = await connection('ongs').count();
+
+        response.header('X-Total-Count', Object.values(count)[0]);
     
         return response.json(ongs);
     },
@@ -15,12 +19,7 @@ module.exports = {
         const id = crypto.randomBytes(4).toString('HEX');
 
         await connection('ongs').insert({
-            id,
-            name,
-            email,
-            whatsapp,
-            city,
-            uf
+            id, name, email, whatsapp, city, uf
         });
 
         console.log(`[INSERT]: A new Ong was created with name "${name}" on id (${id})`);
