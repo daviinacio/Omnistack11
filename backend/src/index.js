@@ -6,9 +6,8 @@ const cors = require('cors');
 const routes = require('./routes');
 
 const app = express();
-
 app.use(cors({
-    origin: 'https://daviinacio.com.br'
+    origin: process.env.CORS_ORIGIN || '*'
 }));
 
 app.use(express.json());
