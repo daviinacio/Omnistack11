@@ -8,7 +8,7 @@ import NewIncident from './pages/NewIncident';
 
 export default function Routes(){
   return(
-    <BrowserRouter>
+    <BrowserRouter basename="/be-the-hero">
       <Switch>
         <Route path="/" exact component={Logon} />
         <Route path="/register" component={Register} />
